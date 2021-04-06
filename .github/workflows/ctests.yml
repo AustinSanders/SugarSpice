@@ -16,11 +16,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: conda-incubator/setup-miniconda@v2
-        with:
-          activate-environment: SugarSpice
-          environment-file: /environment.yml
-          auto-activate-base: false
+    - name: Set up conda environment
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        activate-environment: SugarSpice
+        environment-file: /environment.yml
+        auto-activate-base: false
     - name: Checkout submodules
       uses: snickerbockers/submodules-init@v4
 
