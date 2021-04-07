@@ -13,7 +13,9 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-
+    defaults:
+      run:
+        shell: bash -l {0}
     steps:
     - uses: actions/checkout@v2
     - uses: conda-incubator/setup-miniconda@v2
@@ -23,7 +25,6 @@ jobs:
           auto-update-conda: true
           environment-file: environment.yml
     - name: Conda info
-      shell: bash -l {0}
       run: |
           conda info
           conda list
@@ -44,7 +45,8 @@ jobs:
       # and build directories, but this is only available with CMake 3.13 and higher.  
       # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
       shell: bash
-      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE  -DCSpice_DIR=$CONDA/envs/sugar_spice/lib/cmake/cspice/
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE#
+      #-DCSpice_DIR=$CONDA/envs/sugar_spice/lib/cmake/cspice/
 
     - name: Build
       working-directory: ${{github.workspace}}/build
